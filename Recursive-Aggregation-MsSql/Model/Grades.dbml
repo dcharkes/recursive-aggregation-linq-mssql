@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Grades" Class="GradesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DACO-DESKTOP;Initial Catalog=Grades;Integrated Security=True" SettingsObjectName="Recursive_Aggregation_MsSql.Properties.Settings" SettingsPropertyName="GradesConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Unit" Member="Units">
+    <Type Name="Unit">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="parentId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Unit_Unit" Member="Units" ThisKey="id" OtherKey="parentId" Type="Unit" />
+      <Association Name="Unit_Unit" Member="Unit1" ThisKey="parentId" OtherKey="id" Type="Unit" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Student" Member="Students">
+    <Type Name="Student">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
