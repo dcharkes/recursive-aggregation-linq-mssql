@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Recursive_Aggregation_MsSql.Model;
+using Recursive_Aggregation_MsSql.DataGenerator;
+using System.Diagnostics;
 
 namespace Recursive_Aggregation_MsSql
 {
@@ -11,17 +13,20 @@ namespace Recursive_Aggregation_MsSql
     {
         static void Main(string[] args)
         {
-            GradesDataContext gradesDb = new GradesDataContext();
+            GradesDataContext context = new GradesDataContext();
 
-            var s = new Student();
-            gradesDb.Students.InsertOnSubmit(s);
-            gradesDb.SubmitChanges();
-            Console.WriteLine(s.id);
+            DataGenerator.DataGenerator.generateDataStructure(context);
 
-            foreach (var student in from stud in gradesDb.Students select stud)
+            Stopwatch st = new Stopwatch();
+            st.Start();
+            var i = 0;
+            foreach (var student in from stud in context.Students select stud)
             {
-                Console.WriteLine("Found a student, id = {0}.", student.id);
+                i++;
             }
+            st.Stop();
+            Console.WriteLine("Read {0} students: {1}ms", i, st.ElapsedMilliseconds);
+
 
             Console.ReadKey();
         }
