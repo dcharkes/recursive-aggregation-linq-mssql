@@ -30,12 +30,18 @@ namespace Recursive_Aggregation_MsSql.Model
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertUnit(Unit instance);
-    partial void UpdateUnit(Unit instance);
-    partial void DeleteUnit(Unit instance);
     partial void InsertStudent(Student instance);
     partial void UpdateStudent(Student instance);
     partial void DeleteStudent(Student instance);
+    partial void InsertSubmission(Submission instance);
+    partial void UpdateSubmission(Submission instance);
+    partial void DeleteSubmission(Submission instance);
+    partial void InsertUnit(Unit instance);
+    partial void UpdateUnit(Unit instance);
+    partial void DeleteUnit(Unit instance);
+    partial void InsertAssignment(Assignment instance);
+    partial void UpdateAssignment(Assignment instance);
+    partial void DeleteAssignment(Assignment instance);
     #endregion
 		
 		public GradesDataContext() : 
@@ -68,6 +74,22 @@ namespace Recursive_Aggregation_MsSql.Model
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Student> Students
+		{
+			get
+			{
+				return this.GetTable<Student>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Submission> Submissions
+		{
+			get
+			{
+				return this.GetTable<Submission>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Unit> Units
 		{
 			get
@@ -76,11 +98,341 @@ namespace Recursive_Aggregation_MsSql.Model
 			}
 		}
 		
-		public System.Data.Linq.Table<Student> Students
+		public System.Data.Linq.Table<Assignment> Assignments
 		{
 			get
 			{
-				return this.GetTable<Student>();
+				return this.GetTable<Assignment>();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Student")]
+	public partial class Student : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _name;
+		
+		private EntitySet<Submission> _Submissions;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    #endregion
+		
+		public Student()
+		{
+			this._Submissions = new EntitySet<Submission>(new Action<Submission>(this.attach_Submissions), new Action<Submission>(this.detach_Submissions));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="Char(10)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_Submission", Storage="_Submissions", ThisKey="id", OtherKey="studentId")]
+		public EntitySet<Submission> Submissions
+		{
+			get
+			{
+				return this._Submissions;
+			}
+			set
+			{
+				this._Submissions.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Submissions(Submission entity)
+		{
+			this.SendPropertyChanging();
+			entity.Student = this;
+		}
+		
+		private void detach_Submissions(Submission entity)
+		{
+			this.SendPropertyChanging();
+			entity.Student = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Submission")]
+	public partial class Submission : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private int _studentId;
+		
+		private int _assignmentId;
+		
+		private string _data;
+		
+		private EntityRef<Student> _Student;
+		
+		private EntityRef<Assignment> _Assignment;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnstudentIdChanging(int value);
+    partial void OnstudentIdChanged();
+    partial void OnassignmentIdChanging(int value);
+    partial void OnassignmentIdChanged();
+    partial void OndataChanging(string value);
+    partial void OndataChanged();
+    #endregion
+		
+		public Submission()
+		{
+			this._Student = default(EntityRef<Student>);
+			this._Assignment = default(EntityRef<Assignment>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_studentId", DbType="Int NOT NULL")]
+		public int studentId
+		{
+			get
+			{
+				return this._studentId;
+			}
+			set
+			{
+				if ((this._studentId != value))
+				{
+					if (this._Student.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnstudentIdChanging(value);
+					this.SendPropertyChanging();
+					this._studentId = value;
+					this.SendPropertyChanged("studentId");
+					this.OnstudentIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_assignmentId", DbType="Int NOT NULL")]
+		public int assignmentId
+		{
+			get
+			{
+				return this._assignmentId;
+			}
+			set
+			{
+				if ((this._assignmentId != value))
+				{
+					if (this._Assignment.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnassignmentIdChanging(value);
+					this.SendPropertyChanging();
+					this._assignmentId = value;
+					this.SendPropertyChanged("assignmentId");
+					this.OnassignmentIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_data", DbType="Char(50)")]
+		public string data
+		{
+			get
+			{
+				return this._data;
+			}
+			set
+			{
+				if ((this._data != value))
+				{
+					this.OndataChanging(value);
+					this.SendPropertyChanging();
+					this._data = value;
+					this.SendPropertyChanged("data");
+					this.OndataChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_Submission", Storage="_Student", ThisKey="studentId", OtherKey="id", IsForeignKey=true)]
+		public Student Student
+		{
+			get
+			{
+				return this._Student.Entity;
+			}
+			set
+			{
+				Student previousValue = this._Student.Entity;
+				if (((previousValue != value) 
+							|| (this._Student.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Student.Entity = null;
+						previousValue.Submissions.Remove(this);
+					}
+					this._Student.Entity = value;
+					if ((value != null))
+					{
+						value.Submissions.Add(this);
+						this._studentId = value.id;
+					}
+					else
+					{
+						this._studentId = default(int);
+					}
+					this.SendPropertyChanged("Student");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assignment_Submission", Storage="_Assignment", ThisKey="assignmentId", OtherKey="id", IsForeignKey=true)]
+		public Assignment Assignment
+		{
+			get
+			{
+				return this._Assignment.Entity;
+			}
+			set
+			{
+				Assignment previousValue = this._Assignment.Entity;
+				if (((previousValue != value) 
+							|| (this._Assignment.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Assignment.Entity = null;
+						previousValue.Submissions.Remove(this);
+					}
+					this._Assignment.Entity = value;
+					if ((value != null))
+					{
+						value.Submissions.Add(this);
+						this._assignmentId = value.id;
+					}
+					else
+					{
+						this._assignmentId = default(int);
+					}
+					this.SendPropertyChanged("Assignment");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -97,6 +449,8 @@ namespace Recursive_Aggregation_MsSql.Model
 		
 		private EntitySet<Unit> _Units;
 		
+		private EntitySet<Assignment> _Assignments;
+		
 		private EntityRef<Unit> _Unit1;
 		
     #region Extensibility Method Definitions
@@ -112,6 +466,7 @@ namespace Recursive_Aggregation_MsSql.Model
 		public Unit()
 		{
 			this._Units = new EntitySet<Unit>(new Action<Unit>(this.attach_Units), new Action<Unit>(this.detach_Units));
+			this._Assignments = new EntitySet<Assignment>(new Action<Assignment>(this.attach_Assignments), new Action<Assignment>(this.detach_Assignments));
 			this._Unit1 = default(EntityRef<Unit>);
 			OnCreated();
 		}
@@ -170,6 +525,19 @@ namespace Recursive_Aggregation_MsSql.Model
 			set
 			{
 				this._Units.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Unit_Assignment", Storage="_Assignments", ThisKey="id", OtherKey="unitId")]
+		public EntitySet<Assignment> Assignments
+		{
+			get
+			{
+				return this._Assignments;
+			}
+			set
+			{
+				this._Assignments.Assign(value);
 			}
 		}
 		
@@ -238,17 +606,33 @@ namespace Recursive_Aggregation_MsSql.Model
 			this.SendPropertyChanging();
 			entity.Unit1 = null;
 		}
+		
+		private void attach_Assignments(Assignment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Unit = this;
+		}
+		
+		private void detach_Assignments(Assignment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Unit = null;
+		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Student")]
-	public partial class Student : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Assignment")]
+	public partial class Assignment : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _id;
 		
-		private string _name;
+		private int _unitId;
+		
+		private EntitySet<Submission> _Submissions;
+		
+		private EntityRef<Unit> _Unit;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -256,12 +640,14 @@ namespace Recursive_Aggregation_MsSql.Model
     partial void OnCreated();
     partial void OnidChanging(int value);
     partial void OnidChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
+    partial void OnunitIdChanging(int value);
+    partial void OnunitIdChanged();
     #endregion
 		
-		public Student()
+		public Assignment()
 		{
+			this._Submissions = new EntitySet<Submission>(new Action<Submission>(this.attach_Submissions), new Action<Submission>(this.detach_Submissions));
+			this._Unit = default(EntityRef<Unit>);
 			OnCreated();
 		}
 		
@@ -285,22 +671,73 @@ namespace Recursive_Aggregation_MsSql.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="Char(10)")]
-		public string name
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_unitId", DbType="Int NOT NULL")]
+		public int unitId
 		{
 			get
 			{
-				return this._name;
+				return this._unitId;
 			}
 			set
 			{
-				if ((this._name != value))
+				if ((this._unitId != value))
 				{
-					this.OnnameChanging(value);
+					if (this._Unit.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnunitIdChanging(value);
 					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
+					this._unitId = value;
+					this.SendPropertyChanged("unitId");
+					this.OnunitIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Assignment_Submission", Storage="_Submissions", ThisKey="id", OtherKey="assignmentId")]
+		public EntitySet<Submission> Submissions
+		{
+			get
+			{
+				return this._Submissions;
+			}
+			set
+			{
+				this._Submissions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Unit_Assignment", Storage="_Unit", ThisKey="unitId", OtherKey="id", IsForeignKey=true)]
+		public Unit Unit
+		{
+			get
+			{
+				return this._Unit.Entity;
+			}
+			set
+			{
+				Unit previousValue = this._Unit.Entity;
+				if (((previousValue != value) 
+							|| (this._Unit.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Unit.Entity = null;
+						previousValue.Assignments.Remove(this);
+					}
+					this._Unit.Entity = value;
+					if ((value != null))
+					{
+						value.Assignments.Add(this);
+						this._unitId = value.id;
+					}
+					else
+					{
+						this._unitId = default(int);
+					}
+					this.SendPropertyChanged("Unit");
 				}
 			}
 		}
@@ -323,6 +760,18 @@ namespace Recursive_Aggregation_MsSql.Model
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Submissions(Submission entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assignment = this;
+		}
+		
+		private void detach_Submissions(Submission entity)
+		{
+			this.SendPropertyChanging();
+			entity.Assignment = null;
 		}
 	}
 }
