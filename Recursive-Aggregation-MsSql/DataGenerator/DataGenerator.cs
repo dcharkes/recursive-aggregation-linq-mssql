@@ -40,7 +40,7 @@ namespace Recursive_Aggregation_MsSql.DataGenerator
             Console.WriteLine("Create 1000 students (db): {0}ms", st.ElapsedMilliseconds);
         }
 
-        private static void deleteAllStudents(GradesDataContext context)
+        public static void deleteAllStudents(GradesDataContext context)
         {
             context.Students.DeleteAllOnSubmit(context.Students);
             context.SubmitChanges();

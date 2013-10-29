@@ -248,12 +248,16 @@ namespace Recursive_Aggregation_MsSql.Model
 		
 		private int _id;
 		
+		private string _name;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
     partial void OnidChanging(int value);
     partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
     #endregion
 		
 		public Student()
@@ -277,6 +281,26 @@ namespace Recursive_Aggregation_MsSql.Model
 					this._id = value;
 					this.SendPropertyChanged("id");
 					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="Char(10)")]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
 				}
 			}
 		}

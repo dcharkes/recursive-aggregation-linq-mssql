@@ -15,10 +15,10 @@
         <classShapeMoniker Id="f2f0d69b-b7fa-4a71-a611-9044313cbb68" />
       </nodes>
     </associationConnector>
-    <classShape Id="56e9c6ac-3775-4022-88db-c5b9d4166a64" absoluteBounds="0.5, 0.5, 2, 1.0016910807291668">
+    <classShape Id="4a9ee29b-13d9-4810-aa72-b1d97526f9be" absoluteBounds="0.5, 0.5, 2, 1.1939925130208333">
       <DataClassMoniker Name="/GradesDataContext/Student" />
       <nestedChildShapes>
-        <elementListCompartment Id="b7f27039-e288-4dde-aca8-f68a0278103b" absoluteBounds="0.51500000000000012, 0.96, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="14842117-8d23-4c4f-beda-54197af84c2c" absoluteBounds="0.515, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

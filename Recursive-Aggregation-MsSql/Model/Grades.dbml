@@ -11,6 +11,7 @@
   <Table Name="dbo.Student" Member="Students">
     <Type Name="Student">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="Char(10)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
